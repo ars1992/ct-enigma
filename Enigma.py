@@ -1,5 +1,5 @@
 class Enigma:
-    def __int__(self,
+    def __init__(self,
                 patch_key: str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
                 rotor_selection: list = [0, 1, 2],
                 reflector_selection: int = 0,
