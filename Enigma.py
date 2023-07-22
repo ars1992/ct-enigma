@@ -21,4 +21,12 @@ class Enigma:
                       "YRUHQSLDPXNGOKMIEBFZCWVJAT",
                       "FVPJIAOYEDRZXWGCTKUQSBNMHL"]
 
-        
+        self.r1 = rotors[rotor_selection[0]]
+        self.r2 = rotors[rotor_selection[1]]
+        self.r3 = rotors[rotor_selection[2]]
+        self.re = reflectors[reflector_selection]
+        self.r1_pos = r1_pos
+        self.r2_pos = r2_pos
+        self.r3_pos = r3_pos
+        self.c_offset = int('A'.encode("ascii")[0])
+
