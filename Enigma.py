@@ -30,7 +30,6 @@ class Enigma:
         self.r3_pos = r3_pos
         self.c_offset = int('A'.encode("ascii")[0])
 
-
     def reset(self, new_pos: int = 0):
         self.position = new_pos
 
@@ -48,12 +47,26 @@ class Enigma:
         self.position += 1
         return step8
 
+    def decrypt_char(self, c: str) -> str:
+        step0 = self.al[self.patch_key.index(c[0]) % len(self.al)]
+        step1 = self.al[(self.r1.index(step0[0]) - (self.position // len(self.al) ** 2) - self.r1_pos) % len(self.al)]
+        step2 = self.al[(self.r2.index(step1[0]) - (self.position // len(self.al)) - self.r2_pos) % len(self.al)]
+        step3 = self.al[(self.r3.index(step2[0]) - self.position - self.r3_pos) % len(self.al)]
+        step4 = self.al[self.re.index(step3[0]) % len(self.al)]
+        step5 = self.al[(self.r3.index(step4[0]) - self.position - self.r3_pos) % len(self.al)]
+        step6 = self.al[(self.r2.index(step5[0]) - (self.position // len(self.al)) - self.r2_pos) % len(self.al)]
+        step7 = self.al[(self.r1.index(step6[0]) - (self.position // len(self.al) ** 2) - self.r1_pos) % len(self.al)]
+        step8 = self.al[self.patch_key.index(step7[0]) % len(self.al)]
+        self.position += 1
+        return step8
+
     def encrypt(self, plain_text: str, start_pos: int = 0) -> str:
         self.reset(start_pos)
         return "".join([self.encrypt_char(c) for c in plain_text])
 
-
-
+    def decrypt(self, decrypt_text: str, start_pos: int = 0) -> str:
+        self.reset(start_pos)
+        return "".join([self.decrypt_char(c) for c in decrypt_text])
 
 
 
